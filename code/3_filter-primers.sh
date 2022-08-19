@@ -2,13 +2,14 @@
 #SBATCH --job-name=3_filter-primers
 #SBATCH --partition scavenger
 #SBATCH --mem=20000
-#SBATCH --out=3_filter-primers-%j.out
-#SBATCH --error=3_filter-primers-%j.err
+#SBATCH --out=/hpc/home/%u/3_filter-primers-%j.out
+#SBATCH --error=/hpc/home/%u/3_filter-primers-%j.err
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-type=END
 
-# Usage: sbatch --mail-user=youremail@duke.edu 3_filter-primers.sh /path/to/metabarcoding.sif path/to/XXXXXXXX_results
+# Usage: sbatch --mail-user=<your email> 3_filter-primers.sh /path/to/metabarcoding.sif path/to/XXXXXXXX_results
 
+pipeline=$(pwd)
 cd $2
 mkdir 2_filter
 
@@ -69,3 +70,6 @@ else
 		> 2_filter/$name.out
 	done
 fi
+
+cd $2/2_filter
+$pipeline/count-reads > ../2_counts.txt

@@ -2,19 +2,23 @@
 #SBATCH --job-name=1_demux-barcode
 #SBATCH --mem=20000
 #SBATCH --partition scavenger 
-#SBATCH --out=1_demux-barcode-%j.out
-#SBATCH --error=1_demux-barcode-%j.err
+#SBATCH --out=/hpc/home/%u/1_demux-barcode-%j.out
+#SBATCH --error=/hpc/home/%u/1_demux-barcode-%j.err
+#SBATCH --mail-user=%u@duke.edu
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-type=END
 
 # Usage: 1_demux-barcode.sh /container-dir /miniseq-dir samplesheetname runType
-# Example: sbatch --mail-user=youremail@duke.edu 1_demux-barcode.sh /path/to/metabarcoding.sif path/to/miniseq-dir XXXXXXXX_sample-sheet.csv <trnL>OR<12SV5>
+# Example: sbatch --mail-user=<your email> 1_demux-barcode.sh /path/to/metabarcoding.sif path/to/miniseq-dir XXXXXXXX_sample-sheet.csv <trnL>OR<12SV5>
 # This assumes that the sample sheet is located in the parent directory containing the MiniSeq results
 # folder
+
+# Get the location of the mb-pipeline repo
+pipeline=$(pwd)
+
+# Go to the data directory, make results sub-directory
 cd $2
-cd ..
-parent=$PWD
-cd $2
+parent=$2/..
 now=$(date +'%Y%m%d')
 outdir=$now'_results'
 mkdir $outdir
@@ -56,3 +60,7 @@ mv $outdir/*.fastq.gz $outdir/0_raw_all/
 
 # Remove duplicate Reports and Stats directories
 rm -r $outdir/Reports $outdir/Stats
+
+# Count reads in each file
+cd $outdir/0_raw_demux
+$pipeline/count-reads > ../0_counts.txt

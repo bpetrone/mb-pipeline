@@ -2,21 +2,24 @@
 #SBATCH --job-name=2_trim-adapter
 #SBATCH --partition scavenger
 #SBATCH --mem=20000
-#SBATCH --out=2_trim-adapter-%j.out
+#SBATCH --out=/hpc/home/%u/2_trim-adapter-%j.out
 #SBATCH --error=2_trim-adapter-%j.err
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-type=END
 
 
 # Usage: 2_trim-adapter.sh /container-dir /marker-dir
-  # Example: sbatch --mail-user=youremail@duke.edu 2_trim-adapter.sh /path/to/metabarcoding.sif path/to/XXXXXXXX_results 
+# Example: sbatch --mail-user=<your email> 2_trim-adapter.sh /path/to/metabarcoding.sif path/to/XXXXXXXX_results 
 # where marker-dir is the directory containing reads that all share the same
 # primer set
 # This trims off read-through into Illumina adapter at the 3' side of the read,
 # which can occur if the amplicon size is <150 bp.
+
+# Get the location of the mb-pipeline repo
+pipeline=$(pwd)
+
 cd $2
-cd ..
-wd=$PWD
+wd=$(pwd)/..
 mkdir $2/1_trimadapter
 cd $2/0_raw_demux
 
@@ -31,3 +34,7 @@ for read1 in *R1_001.fastq.gz; do
 	ktrim=r k=19 mink=11 hdist=3 tbo tpe \
 	&>> ../1_trimadapter/BBDuk.out
 done
+
+# Count reads in trimmed files
+cd $2/1_trimadapter
+$pipeline/count-reads > ../1_counts.txt
