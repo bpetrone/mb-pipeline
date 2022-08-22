@@ -9,11 +9,11 @@ parent <- getwd()
 indir <- args[3]
 outdir <- args[4]
 
-library(dada2, lib.loc="/hpc/group/ldavidlab/rpackages"); packageVersion('dada2')
-library(dplyr, lib.loc="/hpc/group/ldavidlab/rpackages"); packageVersion('dplyr') # For data wrangling
-library(ggplot2, lib.loc="/hpc/group/ldavidlab/rpackages"); packageVersion('ggplot2') # For plots
-library(magrittr, lib.loc="/hpc/group/ldavidlab/rpackages"); packageVersion('magrittr') # For pipe
-library(tibble, lib.loc="/hpc/group/ldavidlab/rpackages"); packageVersion('tibble') # For enframe
+library(dada2); packageVersion('dada2')
+library(dplyr); packageVersion('dplyr') # For data wrangling
+library(ggplot2); packageVersion('ggplot2') # For plots
+library(magrittr); packageVersion('magrittr') # For pipe
+library(tibble); packageVersion('tibble') # For enframe
 
 # Find filenames ----------------------------------------------------------
 
