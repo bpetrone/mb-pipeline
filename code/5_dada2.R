@@ -23,8 +23,11 @@ print(paste("Looking in ", path, " for read files"))
 # Generate matched lists of forward and reverse filenames
 fnFs <- sort(list.files(path, pattern = "R1.fastq.gz", full.names = TRUE))
 fnRs <- sort(list.files(path, pattern = "R2.fastq.gz", full.names = TRUE))
-if length(fnFs<1) stop("found no forward read files")
-if length(fnFs<1) stop("found no reverse read files")
+if (length(fnFs)<1)
+	# TODO: for this or case below, could switch to single-ended script
+	stop("Found no forward read files")
+if (length(fnFs)<1)
+	stop("Found no reverse read files")
 print(paste("Found", length(fnFs), "forward read files"))
 print(paste("Found", length(fnRs), "reverse read files"))
 # Inspect read quality profiles -------------------------------------------
