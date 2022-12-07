@@ -33,7 +33,7 @@ KAPA HiFi polymerase	| 0.5	| 50
 **Table 4. Indexing PCR Amplification Parameters**
 Cycle |	Temperature (˚C)  | Time
 ------|-------------------|------
-Initial Denaturation   |	95	| 5 min
+Initial Denaturation   |	95	| 3 min
 10 cycles:
 Denature | 98˚C | 20 sec
 Anneal | 55˚C	| 15 sec
